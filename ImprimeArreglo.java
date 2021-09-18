@@ -48,7 +48,7 @@ for(int i=0;i<arreglo.length;i++){
         //Metodo 4 usando stream y forEach,para usar debes importar libreria Arrays (imprime de manera vertical)
         Arrays.stream(lenguajes).forEach(System.out::println);
 
-        //Metodo 5 usando asList(),para usar debes importar libreria Arrays(imprime de manera horizontal)
+        //Metodo 5 usando asList(),para usar debes importar libreria Arrays(imprime de manera horizontal,solo para arreglos de tipo String)
         System.out.println(Arrays.asList(lenguajes)); 
 
         //Metodo 6 imprime arreglo multidimensional de manera horizontal,para usar debes importar libreria Arrays
