@@ -1,0 +1,46 @@
+import javax.swing.JOptionPane;
+import java.util.Arrays;
+
+
+
+public class NumerosParImpar{
+
+//Generar numeros aleatorios y separar los pares de impares 
+
+public static void main(String[] args) {
+int[]numeroPares=new int[10];
+int[]numeroImPares=new int[10];
+
+int contPares=0;
+int contImpares=0;
+
+int numero=0;
+
+String cadena="";
+
+	for (int i=0;i<10;i++ ) {
+      	    numero=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero"));
+          if (numero%2==0) {
+              numeroPares[contPares++]=numero;
+           } else
+              numeroImPares[contImpares++]=numero;
+
+       }
+
+       cadena = "Los números pares son:\n";
+    for(int i=0;i<contPares;i++)
+    {
+        cadena += numeroPares[i] + "\n";
+    }
+    cadena += "Los números impares son:\n";
+    for(int i=0;i<contImpares;i++)
+    {
+        cadena += numeroImPares[i] + "\n";
+    }
+    
+    JOptionPane.showMessageDialog(null, cadena, "Numeros", JOptionPane.INFORMATION_MESSAGE);
+	
+     
+}
+
+}
