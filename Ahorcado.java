@@ -1,11 +1,20 @@
 
-
 import java.util.Scanner;
-//Realiza el juego ahorcado 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.ArrayList;
 
-public class Ahorcado{
 
-	static void dibujar(int i){
+public class Random {
+
+    static void dibujar(int i){
     switch(i){
        
     case 6:
@@ -79,11 +88,47 @@ public class Ahorcado{
         System.out.println("================"); 
         System.out.println("---GAME OVER---");               
     break;
+   case -1:
+        System.out.println("        +-----+");
+        System.out.println("        |     |"); 
+        System.out.println("  \\o/         |");
+        System.out.println("   |          |");      
+        System.out.println("  / \\         |");      
+        System.out.println("================");
+        System.out.println("  GANASTE!!   ");
+
+    break;
     }
    }
 
-public static void main(String[] args) {
-	
+   static String palabraRandom()throws IOException{
+      
+   StringBuilder result = new StringBuilder();
+      URL url = new URL("https://palabras-aleatorias-public-api.herokuapp.com/random");
+      HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
+      conn.setRequestMethod("GET");
+      try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+      for (String line; (line = reader.readLine()) != null; ) {
+        result.append(line);
+       }
+     }catch(Exception e){
+         System.out.println("Error");
+      }
+      
+     Pattern pattern=Pattern.compile("Word\":\\s\"(.*?)\",");
+     Matcher matcher = pattern.matcher(result);
+
+      String encontrar="";
+    if (matcher.find()) {
+   
+      encontrar = matcher.group(1);
+    
+       }return encontrar;
+
+   }
+
+public static void main(String[] args) throws IOException{
+        ArrayList<String>aux=new ArrayList<>();
         Scanner s = new Scanner(System.in);
         int vidas = 6;
         String palabra;
@@ -93,7 +138,7 @@ public static void main(String[] args) {
         int contador = 0;
         String[] palabras = new String[]{"lapiz", "goma", "libreta", "maestro", "examen", "matematicas"};
         char[] respuesta;
-        palabra = palabras[(int) (Math.random() * 5)];
+        palabra = palabraRandom();
         tamaño = palabra.length();
         respuesta = new char[tamaño];
          
@@ -101,7 +146,7 @@ public static void main(String[] args) {
         for (int i = 0; i<tamaño; i++) {
             respuesta[i] = 'X';
         }
-         
+
  
         while (aciertos != tamaño && vidas != 0) {
             System.out.println("\nIntentos :"+vidas +"   Aciertos: "+aciertos);
@@ -114,7 +159,9 @@ public static void main(String[] args) {
             System.out.println("");
             System.out.println("\nIngresa una letra: ");
             opcion = s.next();
-            if (palabra.contains(opcion)) {
+            
+            if (palabra.contains(opcion)&&!aux.contains(opcion)) {
+                aux.add(opcion);
                 for (int i = 0; i <tamaño; i++) {
                     if (palabra.charAt(i) == opcion.charAt(0)) {
                         respuesta[i] = opcion.charAt(0);
@@ -138,9 +185,16 @@ public static void main(String[] args) {
  
                 System.out.print(respuesta[i]);
             }
-            System.out.println("\nGanaste!!");
+           System.out.println("\n"); 
+           System.out.println("La palabra era : " + palabra);
+           dibujar(-1);
+
+           
              
         }
+
+      
+}     
+
     }
-   
-}
+
