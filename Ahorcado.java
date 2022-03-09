@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class Random {
-
+    static String palabra;
     static void dibujar(int i){
     switch(i){
        
@@ -86,7 +86,8 @@ public class Random {
         System.out.println("              |");	
         }
         System.out.println("================"); 
-        System.out.println("---GAME OVER---");               
+        System.out.println("---GAME OVER---");
+        System.out.println("\nLa palabra era: "+palabra);    
     break;
    case -1:
         System.out.println("        +-----+");
@@ -131,7 +132,6 @@ public static void main(String[] args) throws IOException{
         ArrayList<String>aux=new ArrayList<>();
         Scanner s = new Scanner(System.in);
         int vidas = 6;
-        String palabra;
         int aciertos = 0;
         int tamaño;
         String opcion;
